@@ -29,6 +29,29 @@ func (g HashGrid) GetSquare(v *Vertex) *list.List {
 	return g.grid[*gCor]
 }
 
+func (g HashGrid) GetCluster(v *Vertex) *list.List {
+	clusterVertices := list.New()
+	for i := -1.0; i <= 1.0; i+=1.0 {
+		for j := -1.0; j <= 1.0; j+=1.0 {
+			vert := &Vertex{v.x + i*g.alpha, v.y + j*g.alpha}
+			vert.Show()
+			gridCor := g.GetGridCoor(vert)
+			squareVertices := g.grid[*gridCor]
+			if (squareVertices != nil) {
+				clusterVertices.PushFrontList(squareVertices)
+			}
+		}
+	}
+	return clusterVertices
+}
+
+func PrintList(vertices *list.List) {
+	for e := vertices.Front(); e != nil; e = e.Next() {
+		v := e.Value.(*Vertex)
+		println(v.Show())
+	}
+}
+
 func (g HashGrid) GetGridCoor(v *Vertex) *GridCoor {
 	xc := int(v.x / g.alpha)
 	yc := int(v.y / g.alpha)

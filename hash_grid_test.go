@@ -37,9 +37,19 @@ func TestMultipleElemRetrieve(t *testing.T) {
 	l := list.New()
 	l.PushFront(&Vertex{82.1, 98.1})
 	l.PushFront(&Vertex{82.0, 99.2})
-	println("STARTING MULTI ELEM COMPARISON")
 	if !SameElems(l, m.GetSquare(&Vertex{86.4, 89.987})) {
 		t.Errorf("Multiple elements in same square failed")
+	}
+}
+
+func TestUpperLeftCluster(t *testing.T) {
+	m := NewHashGrid(10.0)
+	m.Add(&Vertex{2.3, 7.9})
+	m.Add(&Vertex{-11.2, 11.1})
+	l := list.New()
+	l.PushFront(&Vertex{2.3, 7.9})
+	if !SameElems(l, m.GetCluster(&Vertex{14.5, 19.9})) {
+		t.Errorf("Wrong vertices returned for cluster")
 	}
 }
 
